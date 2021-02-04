@@ -5,11 +5,16 @@
 
 var camera, scene, renderer, rectangle, div, controls, manager, mixer, composer, dirLight, tween, coords, ambientlight;
 var clock = new THREE.Clock();
-camTarget = new THREE.Vector3(0,20,0);
+camTarget = new THREE.Vector3(0,0,0);
 var clips = [];
 var clipCount = 0;
 var TOD = 15;
 var globalPlane;
+
+var scene2, renderer2;
+var divs = [];
+var divText = [];
+var divDesc = ["Equitone Natura (PG341) + Solar PV", "Equitone Natura (PG542) + Solar PV", "Equitone Natura (PW841) + Solar PV", "Equitone Natura (PW141) + Solar PV"]
 
 console.log(workSettingText.length);
 
@@ -32,15 +37,16 @@ init();
 function init(){
   
   scene = new THREE.Scene();
+  scene2 = new THREE.Scene();
   
   //____Camera //
   near = -100; 
   far = 10000;
   camera = new THREE.OrthographicCamera( frustumSize*aspect/-2, frustumSize*aspect/2, frustumSize/2, frustumSize/-2, near, far );
-  camera.position.x = 20;
-  camera.position.y = 200;
-  camera.position.z = -20;
-  camera.zoom = 5.5;
+  camera.position.x = 10;
+  camera.position.y = 50;
+  camera.position.z = -10;
+  camera.zoom = 30;
   camera.aspect = aspect;
   camera.target = camTarget;
   camera.updateProjectionMatrix();
@@ -72,9 +78,9 @@ function init(){
     });
     animate();
 
-    var coords = { y: 100 }; // Start at (0, 0)
+    var coords = { y: 60 }; // Start at (0, 0)
     var tween = new TWEEN.Tween(coords) // Create a new tween that modifies 'coords'.
-    tween.to({ y: 40 }, 2500) // Move to (300, 200) in 1 second.
+    tween.to({ y: 20 }, 2500) // Move to (300, 200) in 1 second.
     tween.easing(TWEEN.Easing.Elastic.Out);
     tween.delay(500);
     tween.start(); // Start the tween immediately.
@@ -95,10 +101,10 @@ function init(){
       gltf.scene.traverse(function(object) {
 
         if (object instanceof THREE.Mesh){
-          object.material.envMap = envMap;
-          object.material.envMapIntensity = 0.5;
+          // object.material.envMap = envMap;
+          // object.material.envMapIntensity = 0.5;
           object.castShadow = "true";
-          object.receiveShadow = "true"
+          object.receiveShadow = "false"
         };
 
         if (object instanceof THREE.Mesh && (object.material.name =='Roof')) {
@@ -129,22 +135,33 @@ function init(){
       console.log( 'An error happened'+ error );
     }
   );
+
+
+  //____Additional Geometry //
+  var planeGeometry = new THREE.PlaneGeometry( 100, 100, 64 );
+  planeGeometry.rotateX( - Math.PI / 2 );
+  planeGeometry.rotateY( - Math.PI / 4 );
+  var planeMaterial = new THREE.ShadowMaterial();
+  planeMaterial.opacity = 0.35;
+  var plane = new THREE.Mesh( planeGeometry, planeMaterial );
+  plane.position.y = 0.1;
+  plane.receiveShadow = true;
+  scene.add( plane );
   
   //____Light //
-  ambientlight = new THREE.AmbientLight( 0x080808, 7 ); 
-  dirLight = new THREE.DirectionalLight( 0xFCF8E4, 1 );
-  dirLight.shadow.camera.right =  200;
-  dirLight.shadow.camera.left = -200;
-  dirLight.shadow.camera.top =  200;
-  dirLight.shadow.camera.bottom = -200;
-  dirLight.position.y = (sunData[TOD].sunPosition.Y);
-  dirLight.position.x = (sunData[TOD].sunPosition.X);
-  dirLight.position.z = -(sunData[TOD].sunPosition.Z);
-  dirLight.rotation.y = Math.PI / 18;
-  dirLight.shadow.mapSize.width = 2048 * 1;
-  dirLight.shadow.mapSize.height = 2048 * 1;
-  dirLight.shadow.camera.near = 0;
-  dirLight.shadow.camera.far = 1500;
+  ambientlight = new THREE.AmbientLight( 0x080808, 25 ); 
+  dirLight = new THREE.DirectionalLight( 0xFFFFFF, 0.8 );
+  dirLight.shadow.camera.right =  100;
+  dirLight.shadow.camera.left = -100;
+  dirLight.shadow.camera.top =  100;
+  dirLight.shadow.camera.bottom = -100;
+  dirLight.position.y = 50
+  dirLight.position.x = 20;
+  dirLight.position.z = 20;
+  dirLight.shadow.mapSize.width = 2048 * 2;
+  dirLight.shadow.mapSize.height = 2048 * 2;
+  dirLight.shadow.camera.near = -500;
+  dirLight.shadow.camera.far = 500;
   dirLight.bias = 0.0001;
   dirLight.castShadow = true;
   scene.add(dirLight.target);
@@ -165,14 +182,40 @@ function init(){
   renderer.setSize($(container).width(), $(container).height());
   container.appendChild(renderer.domElement);
 
+
+  //_____CSS3D Renderers //
+  // element0 = document.createElement('div');
+  // element0.className = "tag";
+  // element0.style.opacity = 1;
+  // elText0 = document.createElement('div');
+  // element0.appendChild( elText0 );
+  // elText0.className = "titleText";
+  // elText0.innerHTML = '<b>Date/Time: </b>' + '<br>' + (sunData[0].dates);
+
+  // titleDiv0 = new THREE.CSS3DObject(element0);
+  // titleDiv0.position.x = 10;
+  // titleDiv0.position.y = 10;
+  // titleDiv0.position.z = 10;
+  // titleDiv0.rotation.x = -Math.PI / 2;
+  // titleDiv0.rotation.z =  Math.PI;
+  // scene2.add(titleDiv0);
+
+  // renderer2 = new THREE.CSS3DRenderer();
+  // renderer2.setSize(window.innerWidth, window.innerHeight);
+  // renderer2.domElement.style.position = 'absolute';
+  // renderer2.domElement.style.top = 0;
+  // renderer2.domElement.style.pointerEvents= 'none';
+  // renderer2.domElement.style.zIndex = 1;
+  // document.body.appendChild(renderer2.domElement);
+
   //____Controls //
   controls = new THREE.OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
   controls.dampingFactor = 0.25;
   controls.rotateSpeed = 0.5;
   controls.enablePan = false;
-  controls.maxZoom = 10;
-  controls.minZoom = 3;
+  controls.maxZoom = 40;
+  controls.minZoom = 15;
   controls.minPolarAngle = 0;
   controls.maxPolarAngle = Math.PI/2; 
   controls.enableRotate = true;
@@ -189,7 +232,9 @@ function animate(){
   controls.update();
   var delta = 0.65 * clock.getDelta();
   mixer.update(delta);
+
   renderer.render(scene, camera);
+  // renderer2.render( scene2, camera);
   window.requestAnimationFrame( animate );
 }; 
 
@@ -237,7 +282,9 @@ function onWindowResize() {
   camera.top    =   frustumSize / 2;
   camera.bottom = - frustumSize / 2;
   camera.updateProjectionMatrix();
+
   renderer.setSize($(container).width(), $(container).height());
+  // renderer2.setSize($(container).width(), $(container).height());
 };
 
 function isMobileDevice() {
@@ -283,6 +330,7 @@ function toggleFullScreen() {
 
 // 05____Position Selector //
 
+
 var scenePos = [];
 var scenePosNames = [];
 var scenePosText = [];
@@ -293,11 +341,6 @@ for (i = 0; i < workSettingText.length; i++){
   scenePosNames.push(workSettingText[i].name);
   scenePosText.push(workSettingText[i].text);
 };
-
-// var scenePos = [pos1, pos2, pos3, pos4];
-// workSettingText
-// var scenePosNames = ["Magnet", "Matrix", "Mutual", "Mentor"];
-// console.log(scenePos.length%(count+1));
 
 document.getElementById('previous').addEventListener('click', prevImage, false);
 document.getElementById('next').addEventListener('click', nextImage, false);
