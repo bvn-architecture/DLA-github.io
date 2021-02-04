@@ -52,7 +52,7 @@ h3 {
 }
 
 p {
-  font-size: 0.8em;
+  font-size: 0.75em;
   color: black;
   font-family: 'Quicksand', sans-serif;
   margin: 0;
@@ -178,6 +178,7 @@ html {
   flex: 1;
   display: none;
   z-index: 10000;
+  overflow: auto;
 }
 
 #textContent {
