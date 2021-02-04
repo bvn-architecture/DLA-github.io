@@ -11,6 +11,8 @@ var clipCount = 0;
 var TOD = 15;
 var globalPlane;
 
+console.log(workSettingText.length);
+
 
 // 02____Events //
 window.addEventListener( 'resize', onWindowResize, false );
@@ -30,7 +32,6 @@ init();
 function init(){
   
   scene = new THREE.Scene();
-  scene.background = new THREE.Color( 0xFFFFFF );
   
   //____Camera //
   near = -100; 
@@ -66,11 +67,9 @@ function init(){
     // document.getElementById("percentComplete").innerHTML=(Math.ceil( percentComplete ) + "%" )
   };
   manager.onLoad = function ( ) {
-
     clips.forEach((clip) => {
       mixer.clipAction(clip).timeScale = 0;
     });
-
     animate();
 
     var coords = { y: 100 }; // Start at (0, 0)
@@ -109,7 +108,6 @@ function init(){
           object.material.transparent = "true";
           object.material.opacity = 0.2;
         };
-
       });
 
       mixer = new THREE.AnimationMixer(model);
@@ -154,14 +152,13 @@ function init(){
   scene.add(ambientlight);
   
   //____Renderers //
-  renderer = new THREE.WebGLRenderer( { antialias: true } );
+  renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
   renderer.shadowMap.enabled = true;
   renderer.gammaOutput = true;
   renderer.gammaFactor = 2.2;
   renderer.localClippingEnabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.autoClear = false;
-  // renderer.setClearColor( 0xfdf7e8, 1);
   renderer.domElement.style.zIndex = 2;
   setPixelRatio();
   container = document.getElementById('container');
@@ -252,13 +249,17 @@ function isMobileDevice() {
 function mobileUI(){
   if (isMobileDevice() == true){
     console.log('mobile client');
+    var buttons = document.getElementById('buttonBar');
+    var text = document.getElementById('workstyleInfo');
+    document.getElementById('footer').appendChild(buttons);
+    document.getElementById('footer').appendChild(text);
   } else {
     document.getElementById('right-half').style.display = 'flex';
     document.getElementById('footer').style.display = 'none';
     document.getElementById('header').style.display = 'none';
 
     var buttons = document.getElementById('buttonBar');
-    document.getElementById('right-half').appendChild(buttons);
+    document.getElementById('posSelector').appendChild(buttons);
     console.log('desktop client');
   }
 };
@@ -282,25 +283,32 @@ function toggleFullScreen() {
 
 // 05____Position Selector //
 
-var pos1 = new THREE.Vector3(0,0,0);
-var pos2 = new THREE.Vector3(0,50,0);
-var pos3 = new THREE.Vector3(50,50,0);
-var pos4 = new THREE.Vector3(50,0,0);
-
-var scenePos = [pos1, pos2, pos3, pos4];
-var scenePosNames = ["Magnet", "Matrix", "Mutual", "Mentor"];
+var scenePos = [];
+var scenePosNames = [];
+var scenePosText = [];
 var count = 0;
-console.log(scenePos.length%(count+1));
+
+for (i = 0; i < workSettingText.length; i++){
+  scenePos.push(new THREE.Vector3(workSettingText[i].pos[0],workSettingText[i].pos[1],workSettingText[i].pos[2]))
+  scenePosNames.push(workSettingText[i].name);
+  scenePosText.push(workSettingText[i].text);
+};
+
+// var scenePos = [pos1, pos2, pos3, pos4];
+// workSettingText
+// var scenePosNames = ["Magnet", "Matrix", "Mutual", "Mentor"];
+// console.log(scenePos.length%(count+1));
 
 document.getElementById('previous').addEventListener('click', prevImage, false);
 document.getElementById('next').addEventListener('click', nextImage, false);
-document.getElementById('imageRef').innerHTML = "<h1>" + scenePosNames[count] + "</h1>";
+document.getElementById('imageRef').innerHTML = "<h3>" + scenePosNames[count] + "</h3>";
+document.getElementById('posText').innerHTML = "<p>" + scenePosText[count] + "</p>";
 
 function prevImage(){
   var vals = { y: scenePos[count].y, x: scenePos[count].x }; // Start at (0, 0)
   count--;
   if (count <= 0){
-    count = scenePos.length;
+    count = scenePos.length-1;
   };
   var tweenMoveScene = new TWEEN.Tween(vals) // Create a new tween that modifies 'vals'.
   tweenMoveScene.to({ y: scenePos[count].y, x: scenePos[count].x }, 500) // Move to (300, 200) in 1 second.
@@ -311,8 +319,8 @@ function prevImage(){
     scene.getObjectByName( "Scene" ).position.z = vals.y;
     scene.getObjectByName( "Scene" ).position.x = vals.x;
   });
-  document.getElementById('imageRef').innerHTML = "<h1>" + scenePosNames[count] + "</h1>";
-  // controls.target = new THREE.Vector3(0, camTarget.y, 0);
+  document.getElementById('imageRef').innerHTML = "<h3>" + scenePosNames[count] + "</h3>";
+  document.getElementById('posText').innerHTML = "<p>" + scenePosText[count] + "</p>";
   controls.update();
 };
 
@@ -332,8 +340,8 @@ function nextImage(){
     scene.getObjectByName( "Scene" ).position.z = vals.y;
     scene.getObjectByName( "Scene" ).position.x = vals.x;
   });
-  document.getElementById('imageRef').innerHTML = "<h1>" + scenePosNames[count] + "</h1>";
-  // controls.target = new THREE.Vector3(0, camTarget.y, 0);
+  document.getElementById('imageRef').innerHTML = "<h3>" + scenePosNames[count] + "</h3>";
+  document.getElementById('posText').innerHTML = "<p>" + scenePosText[count] + "</p>";
   controls.update();
 }
 
