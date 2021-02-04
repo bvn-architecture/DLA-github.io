@@ -11,7 +11,7 @@ var clipCount = 0;
 var TOD = 15;
 var globalPlane;
 
-var scene2, renderer2;
+var scene2, renderer2, titleDiv0;
 var divs = [];
 var divText = [];
 var divDesc = ["Equitone Natura (PG341) + Solar PV", "Equitone Natura (PG542) + Solar PV", "Equitone Natura (PW841) + Solar PV", "Equitone Natura (PW141) + Solar PV"]
@@ -184,29 +184,31 @@ function init(){
 
 
   //_____CSS3D Renderers //
-  // element0 = document.createElement('div');
-  // element0.className = "tag";
-  // element0.style.opacity = 1;
-  // elText0 = document.createElement('div');
-  // element0.appendChild( elText0 );
-  // elText0.className = "titleText";
-  // elText0.innerHTML = '<b>Date/Time: </b>' + '<br>' + (sunData[0].dates);
+  element0 = document.createElement('div');
+  element0.className = "tag";
+  element0.style.opacity = 1;
+  elText0 = document.createElement('div');
+  elGIF = document.createElement('img');
+  elGIF.src = 'img/VR.gif';
+  elGIF.style = "width: 5px; height: 5px;"
+  element0.appendChild( elGIF );
+  elText0.className = "titleText";
+  elText0.innerHTML = "testing testing testing testing";
 
-  // titleDiv0 = new THREE.CSS3DObject(element0);
-  // titleDiv0.position.x = 10;
-  // titleDiv0.position.y = 10;
-  // titleDiv0.position.z = 10;
-  // titleDiv0.rotation.x = -Math.PI / 2;
-  // titleDiv0.rotation.z =  Math.PI;
+  titleDiv0 = new THREE.CSS3DObject(element0);
+  titleDiv0.rotation.x = -Math.PI / 1;
+  titleDiv0.rotation.z =  Math.PI;
+  titleDiv0.position.x = 7;
+  titleDiv0.position.y = 11;
+  titleDiv0.position.z = 7;
   // scene2.add(titleDiv0);
 
-  // renderer2 = new THREE.CSS3DRenderer();
-  // renderer2.setSize(window.innerWidth, window.innerHeight);
-  // renderer2.domElement.style.position = 'absolute';
-  // renderer2.domElement.style.top = 0;
-  // renderer2.domElement.style.pointerEvents= 'none';
-  // renderer2.domElement.style.zIndex = 1;
-  // document.body.appendChild(renderer2.domElement);
+  renderer2 = new THREE.CSS3DRenderer();
+  renderer2.setSize($(containerCSS).width(), $(containerCSS).height());
+  renderer2.domElement.style.pointerEvents= 'none';
+  renderer2.domElement.style.zIndex = 1000;
+  containerCSS = document.getElementById('containerCSS');
+  containerCSS.appendChild(renderer2.domElement);
 
   //____Controls //
   controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -229,12 +231,13 @@ function animate(){
   var time2 = Date.now() * 0.002;
   TWEEN.update();
   camera.updateProjectionMatrix();
+  // titleDiv0.lookAt(camera.position.x, camera.position.y, camera.position.z);
   controls.update();
   var delta = 0.65 * clock.getDelta();
   mixer.update(delta);
 
   renderer.render(scene, camera);
-  // renderer2.render( scene2, camera);
+  renderer2.render( scene2, camera);
   window.requestAnimationFrame( animate );
 }; 
 
@@ -284,7 +287,7 @@ function onWindowResize() {
   camera.updateProjectionMatrix();
 
   renderer.setSize($(container).width(), $(container).height());
-  // renderer2.setSize($(container).width(), $(container).height());
+  renderer2.setSize($(container).width(), $(container).height());
 };
 
 function isMobileDevice() {
