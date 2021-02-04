@@ -66,6 +66,8 @@ p {
   position: absolute;
   margin: auto;
   text-align: center;
+  z-index: 10000;
+  background-color: rgba(255,255,255,0.7);
   /*pointer-events: none;*/
 }
 
@@ -175,12 +177,14 @@ html {
 #right-half {
   flex: 1;
   display: none;
+  z-index: 10000;
 }
 
 #textContent {
   padding-top: 25%;
   padding-right: 100px;
   padding-left: 110px;
+  z-index: 10000;
 }
 
 *:focus {
@@ -276,7 +280,7 @@ html {
 }
 
 #tagKey {
-  width: 5px;
+  width: 25px;
   padding: 4px;
 }
 
