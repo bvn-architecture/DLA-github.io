@@ -49,7 +49,7 @@ function init(){
   camera.position.x = 10;
   camera.position.y = 50;
   camera.position.z = -10;
-  camera.zoom = 30;
+  camera.zoom = 40;
   camera.aspect = aspect;
   camera.target = camTarget;
   camera.updateProjectionMatrix();
@@ -206,7 +206,34 @@ function init(){
   titleDiv0.position.x = 7;
   titleDiv0.position.y = 11.5;
   titleDiv0.position.z = 7;
-  scene2.add(titleDiv0);
+  // scene2.add(titleDiv0);
+
+
+  // People Anim //
+
+  for (i = 0; i < people.length; i++){
+    console.log("helllooooooo");
+    element = document.createElement('div');
+    element.className = "tag";
+    element.style.opacity = 1;
+    elGIF = document.createElement('img');
+    elGIF.src = people[i].type;
+    elGIF.style = "width: 3px; height: 3px;"
+    element.appendChild( elGIF );
+    elText0.className = "titleText";
+    elText0.innerHTML = "testing testing testing testing";
+
+
+    peopleGIF = new THREE.CSS3DObject(element);
+    peopleGIF.rotation.x = -Math.PI;
+    peopleGIF.rotation.z = Math.PI;
+    peopleGIF.rotation.y = people[i].rot;
+    peopleGIF.position.x = people[i].pos[0];
+    peopleGIF.position.y = people[i].pos[1];
+    peopleGIF.position.z = people[i].pos[2];
+    scene2.add(peopleGIF);
+  };
+
 
   renderer2 = new THREE.CSS3DRenderer();
   renderer2.setSize($(containerCSS).width(), $(containerCSS).height());

@@ -278,11 +278,13 @@ html {
   width: 5px;
   height: 5px;
   z-index: 100;
+  pointer-events: none;
 }
 
 #tagKey {
   width: 25px;
   padding: 4px;
+  pointer-events: none;
 }
 
 /*.tag:hover {
@@ -292,6 +294,7 @@ html {
 
 .titleText {
   font-size: 2px;
+  pointer-events: none;
 }
 
 .subText {
