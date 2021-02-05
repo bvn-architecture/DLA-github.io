@@ -37,7 +37,10 @@ init();
 function init(){
   
   scene = new THREE.Scene();
+  scene.name = "scene";
   scene2 = new THREE.Scene();
+  scene2.name = "scene2";
+  console.log(scene2);
   
   //____Camera //
   near = -100; 
@@ -104,10 +107,11 @@ function init(){
           // object.material.envMap = envMap;
           // object.material.envMapIntensity = 0.5;
           object.castShadow = "true";
-          object.receiveShadow = "false"
+          object.receiveShadow = "true"
         };
 
-        if (object instanceof THREE.Mesh && (object.material.name =='Roof')) {
+        if (object instanceof THREE.Mesh && (object.name =='magnet')) {
+          console.log("fired");
           object.material.side = THREE.DoubleSide;
           object.castShadow = "false";
           object.receiveShadow = "false";
@@ -190,18 +194,19 @@ function init(){
   elText0 = document.createElement('div');
   elGIF = document.createElement('img');
   elGIF.src = 'img/VR.gif';
-  elGIF.style = "width: 5px; height: 5px;"
+  elGIF.style = "width: 3px; height: 3px;"
   element0.appendChild( elGIF );
   elText0.className = "titleText";
   elText0.innerHTML = "testing testing testing testing";
 
   titleDiv0 = new THREE.CSS3DObject(element0);
-  titleDiv0.rotation.x = -Math.PI / 1;
+  titleDiv0.rotation.x = -Math.PI;
   titleDiv0.rotation.z =  Math.PI;
+  titleDiv0.rotation.y =  Math.PI / 4;
   titleDiv0.position.x = 7;
-  titleDiv0.position.y = 11;
+  titleDiv0.position.y = 11.5;
   titleDiv0.position.z = 7;
-  // scene2.add(titleDiv0);
+  scene2.add(titleDiv0);
 
   renderer2 = new THREE.CSS3DRenderer();
   renderer2.setSize($(containerCSS).width(), $(containerCSS).height());
@@ -216,7 +221,7 @@ function init(){
   controls.dampingFactor = 0.25;
   controls.rotateSpeed = 0.5;
   controls.enablePan = false;
-  controls.maxZoom = 40;
+  controls.maxZoom = 60;
   controls.minZoom = 15;
   controls.minPolarAngle = 0;
   controls.maxPolarAngle = Math.PI/2; 
@@ -229,15 +234,16 @@ function init(){
 
 function animate(){
   var time2 = Date.now() * 0.002;
+  
   TWEEN.update();
   camera.updateProjectionMatrix();
-  // titleDiv0.lookAt(camera.position.x, camera.position.y, camera.position.z);
   controls.update();
   var delta = 0.65 * clock.getDelta();
   mixer.update(delta);
 
   renderer.render(scene, camera);
   renderer2.render( scene2, camera);
+
   window.requestAnimationFrame( animate );
 }; 
 
@@ -362,8 +368,10 @@ function prevImage(){
   tweenMoveScene.delay(0);
   tweenMoveScene.start(); // Start the tween immediately.
   tweenMoveScene.onUpdate(function(object) {
-    scene.getObjectByName( "Scene" ).position.z = vals.y;
-    scene.getObjectByName( "Scene" ).position.x = vals.x;
+    scene.getObjectByName( "scene" ).position.z = vals.y;
+    scene.getObjectByName( "scene" ).position.x = vals.x;
+    scene2.getObjectByName( "scene2" ).position.z = vals.y;
+    scene2.getObjectByName( "scene2" ).position.x = vals.x;
   });
   document.getElementById('imageRef').innerHTML = "<h3>" + scenePosNames[count] + "</h3>";
   document.getElementById('posText').innerHTML = "<p>" + scenePosText[count] + "</p>";
@@ -383,8 +391,10 @@ function nextImage(){
   tweenMoveScene.delay(0);
   tweenMoveScene.start(); // Start the tween immediately.
   tweenMoveScene.onUpdate(function(object) {
-    scene.getObjectByName( "Scene" ).position.z = vals.y;
-    scene.getObjectByName( "Scene" ).position.x = vals.x;
+    scene.getObjectByName( "scene" ).position.z = vals.y;
+    scene.getObjectByName( "scene" ).position.x = vals.x;
+    scene2.getObjectByName( "scene2" ).position.z = vals.y;
+    scene2.getObjectByName( "scene2" ).position.x = vals.x;
   });
   document.getElementById('imageRef').innerHTML = "<h3>" + scenePosNames[count] + "</h3>";
   document.getElementById('posText').innerHTML = "<p>" + scenePosText[count] + "</p>";
