@@ -2,62 +2,62 @@ var people =
 [
 	{
 	"type":"img/VR.gif",
-	"pos": [1, 11.5, -18.5],
+	"pos": [25, 15, -175],
 	"rot": Math.PI/4
 	},
 	{
 	"type":"img/Normal-1.gif",
-	"pos": [11, 11.5, 0],
+	"pos": [120, 15, 0],
 	"rot": 0	
 	},
 	{
 	"type":"img/Books.gif",
-	"pos": [16, 11.5, 4],
+	"pos": [145, 15, 60],
 	"rot": Math.PI/4	
 	},
 	{
 	"type":"img/Normal-1.gif",
-	"pos": [-15, 11.5, 5],
+	"pos": [-170, 15, -40],
 	"rot": 0	
 	},
 	{
 	"type":"img/Normal-1.gif",
-	"pos": [-19, 11.5, 4],
+	"pos": [-200, 15, 40],
 	"rot": 3*Math.PI/4	
 	},
 	{
 	"type":"img/Music.gif",
-	"pos": [-21, 11.5, -4],
+	"pos": [-210, 15, -40],
 	"rot": Math.PI/4	
 	},
 	{
 	"type":"img/Exclaim.gif",
-	"pos": [19, 11.5, 19],
+	"pos": [200, 15, 200],
 	"rot": -Math.PI/4
 	},
 	{
 	"type":"img/Exclaim.gif",
-	"pos": [-3, 11.5, 20],
+	"pos": [-30, 15, 200],
 	"rot": -Math.PI/1
 	},
 	{
 	"type":"img/Exclaim.gif",
-	"pos": [-2, 11.5, -11],
+	"pos": [-20, 15, -110],
 	"rot": -Math.PI/4
 	},
 	{
 	"type":"img/Normal-1.gif",
-	"pos": [3, 12.5, -9],
+	"pos": [0, 35, -80],
 	"rot": -Math.PI
 	},
 	{
 	"type":"img/Music.gif",
-	"pos": [5, 11.5, -10],
+	"pos": [50, 15, -100],
 	"rot": Math.PI/4
 	},
 	{
 	"type":"img/Love.gif",
-	"pos": [7, 11.5, 7],
+	"pos": [70, 15, 70],
 	"rot": Math.PI/4
 	}
 ]

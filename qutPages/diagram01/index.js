@@ -5,16 +5,15 @@
 
 var camera, scene, renderer, rectangle, div, controls, manager, mixer, composer, dirLight, tween, coords, ambientlight;
 var clock = new THREE.Clock();
-camTarget = new THREE.Vector3(0,0,0);
+var camTarget = new THREE.Vector3(0,0,0);
+var camPos = new THREE.Vector3(10, 50, -10);
 var clips = [];
 var clipCount = 0;
 var TOD = 15;
 var globalPlane;
 
 var scene2, renderer2, titleDiv0;
-var divs = [];
-var divText = [];
-var divDesc = ["Equitone Natura (PG341) + Solar PV", "Equitone Natura (PG542) + Solar PV", "Equitone Natura (PW841) + Solar PV", "Equitone Natura (PW141) + Solar PV"]
+var peopleGIFS = [];
 
 console.log(workSettingText.length);
 
@@ -28,7 +27,7 @@ mobileUI();
 container = document.getElementById('container');
 var aspect = $(container).width() / $(container).height();
 var mouseX = 0, mouseY = 0;
-var frustumSize = 1000;
+var frustumSize = 2000;
 
 // 04____Functions //
 
@@ -37,19 +36,19 @@ init();
 function init(){
   
   scene = new THREE.Scene();
-  scene.name = "scene";
+  scene.name = "scene"; 
   scene2 = new THREE.Scene();
   scene2.name = "scene2";
   console.log(scene2);
   
   //____Camera //
-  near = -100; 
-  far = 10000;
+  near = -1000; 
+  far = 1000;
   camera = new THREE.OrthographicCamera( frustumSize*aspect/-2, frustumSize*aspect/2, frustumSize/2, frustumSize/-2, near, far );
-  camera.position.x = 10;
-  camera.position.y = 50;
-  camera.position.z = -10;
-  camera.zoom = 40;
+  camera.position.x = camPos.x;
+  camera.position.y = camPos.y;
+  camera.position.z = camPos.z;
+  camera.zoom = 4;
   camera.aspect = aspect;
   camera.target = camTarget;
   camera.updateProjectionMatrix();
@@ -181,48 +180,23 @@ function init(){
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.autoClear = false;
   renderer.domElement.style.zIndex = 2;
-  setPixelRatio();
+  // setPixelRatio();
   container = document.getElementById('container');
   renderer.setSize($(container).width(), $(container).height());
   container.appendChild(renderer.domElement);
 
 
   //_____CSS3D Renderers //
-  element0 = document.createElement('div');
-  element0.className = "tag";
-  element0.style.opacity = 1;
-  elText0 = document.createElement('div');
-  elGIF = document.createElement('img');
-  elGIF.src = 'img/VR.gif';
-  elGIF.style = "width: 3px; height: 3px;"
-  element0.appendChild( elGIF );
-  elText0.className = "titleText";
-  elText0.innerHTML = "testing testing testing testing";
-
-  titleDiv0 = new THREE.CSS3DObject(element0);
-  titleDiv0.rotation.x = -Math.PI;
-  titleDiv0.rotation.z =  Math.PI;
-  titleDiv0.rotation.y =  Math.PI / 4;
-  titleDiv0.position.x = 7;
-  titleDiv0.position.y = 11.5;
-  titleDiv0.position.z = 7;
-  // scene2.add(titleDiv0);
-
-
   // People Anim //
 
   for (i = 0; i < people.length; i++){
-    console.log("helllooooooo");
     element = document.createElement('div');
     element.className = "tag";
     element.style.opacity = 1;
     elGIF = document.createElement('img');
     elGIF.src = people[i].type;
-    elGIF.style = "width: 3px; height: 3px;"
+    elGIF.style = "width: 30px; height: 30px;"
     element.appendChild( elGIF );
-    elText0.className = "titleText";
-    elText0.innerHTML = "testing testing testing testing";
-
 
     peopleGIF = new THREE.CSS3DObject(element);
     peopleGIF.rotation.x = -Math.PI;
@@ -231,6 +205,12 @@ function init(){
     peopleGIF.position.x = people[i].pos[0];
     peopleGIF.position.y = people[i].pos[1];
     peopleGIF.position.z = people[i].pos[2];
+    console.log(peopleGIF);
+
+    var peopleOrient = new THREE.Vector3(camPos.x*10000, peopleGIF.position.y, camPos.z*10000);
+    peopleGIF.lookAt(peopleOrient);
+
+    peopleGIFS.push(peopleGIF)
     scene2.add(peopleGIF);
   };
 
@@ -248,8 +228,8 @@ function init(){
   controls.dampingFactor = 0.25;
   controls.rotateSpeed = 0.5;
   controls.enablePan = false;
-  controls.maxZoom = 60;
-  controls.minZoom = 15;
+  controls.maxZoom = 20;
+  controls.minZoom = 1;
   controls.minPolarAngle = 0;
   controls.maxPolarAngle = Math.PI/2; 
   controls.enableRotate = true;
@@ -267,6 +247,11 @@ function animate(){
   controls.update();
   var delta = 0.65 * clock.getDelta();
   mixer.update(delta);
+
+  for (i = 0; i < peopleGIFS.length; i++){
+    var peopleOrient = new THREE.Vector3(camera.position.x*10000, peopleGIFS[i].position.y, camera.position.z*10000);
+    peopleGIFS[i].lookAt(peopleOrient);
+  };
 
   renderer.render(scene, camera);
   renderer2.render( scene2, camera);

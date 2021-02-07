@@ -273,17 +273,15 @@ html {
   background-color: 'red';
   padding: 2px;
   border-radius: 3px;
-  border: 0.5px black;
   text-align: left;
-  width: 5px;
-  height: 5px;
+  width: 30px;
+  height: 30px;
   z-index: 100;
   pointer-events: none;
 }
 
 #tagKey {
   width: 25px;
-  padding: 4px;
   pointer-events: none;
 }
 
