@@ -13,6 +13,7 @@ var TOD = 15;
 var globalPlane;
 
 var scene2, renderer2, titleDiv0;
+var scene3, renderer3;
 var peopleGIFS = [];
 var callouts = [];
 
@@ -38,8 +39,9 @@ function init(){
   scene.name = "scene"; 
   scene2 = new THREE.Scene();
   scene2.name = "scene2";
-  console.log(scene2);
-  
+  scene3 = new THREE.Scene();
+  scene3.name = "scene3";
+ 
   //____Camera //
   near = -1000; 
   far = 1000;
@@ -179,6 +181,7 @@ function init(){
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.autoClear = false;
   renderer.domElement.style.zIndex = 2;
+  renderer.setPixelRatio(window.devicePixelRatio);
   // setPixelRatio();
   container = document.getElementById('container');
   renderer.setSize($(container).width(), $(container).height());
@@ -223,7 +226,7 @@ function init(){
     elText.className = "titleText";
     elText.innerHTML = '<h4>' + calloutText[i].title + '</h4>' + '<h5>' + calloutText[i].subtitle + '</h5>';
 
-    calloutObj = new THREE.CSS3DObject(element);
+    calloutObj = new THREE.CSS2DObject(element);
     calloutObj.rotation.x = -Math.PI;
     calloutObj.rotation.z = Math.PI;
     calloutObj.position.x = calloutText[i].pos[0];
@@ -234,9 +237,8 @@ function init(){
     calloutObj.lookAt(calloutOrient);
 
     callouts.push(calloutObj)
-    scene2.add(calloutObj);
+    scene3.add(calloutObj);
   };
-
 
   renderer2 = new THREE.CSS3DRenderer();
   renderer2.setSize($(containerCSS).width(), $(containerCSS).height());
@@ -244,6 +246,13 @@ function init(){
   renderer2.domElement.style.zIndex = 1000;
   containerCSS = document.getElementById('containerCSS');
   containerCSS.appendChild(renderer2.domElement);
+
+  renderer3 = new THREE.CSS2DRenderer();
+  renderer3.setSize($(containerCSS2).width(), $(containerCSS2).height());
+  renderer3.domElement.style.pointerEvents= 'none';
+  renderer3.domElement.style.zIndex = 1000;
+  containerCSS2 = document.getElementById('containerCSS2');
+  containerCSS2.appendChild(renderer3.domElement);
 
   //____Controls //
   controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -286,6 +295,7 @@ function animate(){
 
   renderer.render(scene, camera);
   renderer2.render( scene2, camera);
+  renderer3.render( scene3, camera);
 
   window.requestAnimationFrame( animate );
 }; 
@@ -337,6 +347,7 @@ function onWindowResize() {
 
   renderer.setSize($(container).width(), $(container).height());
   renderer2.setSize($(container).width(), $(container).height());
+  renderer3.setSize($(container).width(), $(container).height());
 };
 
 function isMobileDevice() {
@@ -404,16 +415,6 @@ document.getElementById('posText').innerHTML = "<p>" + scenePosText[count] + "</
 
 // 06____TextReveal //
 
-function h5Toggle() {
-  console.log("clicked");
-  var x = document.getElementById("calloutTag");
-  console.log(x.style.display);
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-};
 
 function prevImage(){
   var vals = { y: scenePos[count].y, x: scenePos[count].x }; // Start at (0, 0)
@@ -421,8 +422,9 @@ function prevImage(){
   if (count <= 0){
     count = scenePos.length-1;
   };
+  console.log(count);
   var tweenMoveScene = new TWEEN.Tween(vals) // Create a new tween that modifies 'vals'.
-  tweenMoveScene.to({ y: scenePos[count].y, x: scenePos[count].x }, 500) // Move to (300, 200) in 1 second.
+  tweenMoveScene.to({ y: scenePos[count].y, x: scenePos[count].x, z: scenePosZoom[count] }, 500) // Move to (300, 200) in 1 second.
   tweenMoveScene.easing(TWEEN.Easing.Quadratic.InOut);
   tweenMoveScene.delay(0);
   tweenMoveScene.start(); // Start the tween immediately.
@@ -431,6 +433,9 @@ function prevImage(){
     scene.getObjectByName( "scene" ).position.x = vals.x;
     scene2.getObjectByName( "scene2" ).position.z = vals.y;
     scene2.getObjectByName( "scene2" ).position.x = vals.x;
+    scene3.getObjectByName( "scene3" ).position.z = vals.y;
+    scene3.getObjectByName( "scene3" ).position.x = vals.x;
+    camera.zoom = vals.z;
   });
   document.getElementById('imageRef').innerHTML = "<h3>" + scenePosNames[count] + "</h3>";
   document.getElementById('posText').innerHTML = "<p>" + scenePosText[count] + "</p>";
@@ -454,6 +459,8 @@ function nextImage(){
     scene.getObjectByName( "scene" ).position.x = vals.x;
     scene2.getObjectByName( "scene2" ).position.z = vals.y;
     scene2.getObjectByName( "scene2" ).position.x = vals.x;
+    scene3.getObjectByName( "scene3" ).position.z = vals.y;
+    scene3.getObjectByName( "scene3" ).position.x = vals.x;
     camera.zoom = vals.z;
   });
   document.getElementById('imageRef').innerHTML = "<h3>" + scenePosNames[count] + "</h3>";
