@@ -17,6 +17,7 @@ var scene3, renderer3;
 var peopleGIFS = [];
 var callouts = [];
 
+console.log(window.devicePixelRatio);
 
 // 02____Events //
 window.addEventListener( 'resize', onWindowResize, false );
@@ -221,10 +222,14 @@ function init(){
     element.style.opacity = 1;
     element.className = "calloutTag";
     element.id = "calloutTag";
-    elText = document.createElement('div');
+    elTitle = document.createElement('h4');
+    elText = document.createElement('h5');
+    element.appendChild( elTitle );
     element.appendChild( elText );
-    elText.className = "titleText";
-    elText.innerHTML = '<h4>' + calloutText[i].title + '</h4>' + '<h5>' + calloutText[i].subtitle + '</h5>';
+    elTitle.className = "elTitle";
+    elTitle.innerHTML = calloutText[i].title;
+    elText.className = "elText";
+    elText.innerHTML = calloutText[i].subtitle;
 
     calloutObj = new THREE.CSS2DObject(element);
     calloutObj.rotation.x = -Math.PI;
@@ -439,6 +444,19 @@ function prevImage(){
   });
   document.getElementById('imageRef').innerHTML = "<h3>" + scenePosNames[count] + "</h3>";
   document.getElementById('posText').innerHTML = "<p>" + scenePosText[count] + "</p>";
+
+  var els = document.getElementsByClassName("elText");
+
+  if (count != 0){
+    for (var i = 0; i < els.length; i++) {
+      els[i].style.display = 'block';
+    }
+  } else {
+    for (var i = 0; i < els.length; i++) {
+      els[i].style.display = 'none';
+    }
+  };
+  
   controls.update();
 };
 
@@ -465,8 +483,22 @@ function nextImage(){
   });
   document.getElementById('imageRef').innerHTML = "<h3>" + scenePosNames[count] + "</h3>";
   document.getElementById('posText').innerHTML = "<p>" + scenePosText[count] + "</p>";
+  
+
+  var els = document.getElementsByClassName("elText");
+
+  if (count != 0){
+    for (var i = 0; i < els.length; i++) {
+      els[i].style.display = 'block';
+    }
+  } else {
+    for (var i = 0; i < els.length; i++) {
+      els[i].style.display = 'none';
+    }
+  };
+
   controls.update();
-}
+};
 
 function map_range(value, low1, high1, low2, high2) {
     return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
