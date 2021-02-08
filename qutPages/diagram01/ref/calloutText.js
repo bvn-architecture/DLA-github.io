@@ -12,7 +12,7 @@ var calloutText =
 	"subtitle":"A short description of the above space and it's contribution to the setting."
 	},
 	{
-	"title":"Outdoors",
+	"title":"Academy",
 	"pos": [-155, calloutHeight, -155],
 	"subtitle":"A short description of the above space and it's contribution to the setting."
 	},

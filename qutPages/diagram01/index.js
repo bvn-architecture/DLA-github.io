@@ -422,11 +422,16 @@ document.getElementById('posText').innerHTML = "<p>" + scenePosText[count] + "</
 
 
 function prevImage(){
-  var vals = { y: scenePos[count].y, x: scenePos[count].x }; // Start at (0, 0)
+  var vals = { y: scenePos[count].y, x: scenePos[count].x, z: camera.zoom }; // Start at (0, 0)
+  
   count--;
-  if (count <= 0){
+  
+  if (count < 0){
     count = scenePos.length-1;
   };
+
+  console.log(count);
+
   console.log(count);
   var tweenMoveScene = new TWEEN.Tween(vals) // Create a new tween that modifies 'vals'.
   tweenMoveScene.to({ y: scenePos[count].y, x: scenePos[count].x, z: scenePosZoom[count] }, 500) // Move to (300, 200) in 1 second.
@@ -486,14 +491,17 @@ function nextImage(){
   
 
   var els = document.getElementsByClassName("elText");
+  var els2 = document.getElementsByClassName("elTitle");
 
   if (count != 0){
     for (var i = 0; i < els.length; i++) {
       els[i].style.display = 'block';
+      els2[i].style.display = 'block';
     }
   } else {
     for (var i = 0; i < els.length; i++) {
       els[i].style.display = 'none';
+      els2[i].style.display = 'none';
     }
   };
 

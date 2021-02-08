@@ -4,7 +4,7 @@ var workSettingText =
 	"name":"Select Setting",
 	"pos": [0,0,0],
 	"zoom": 3,
-	"text":"These typologies are rooted in research and current best practice. They are not intended to be mutually exclusive; they represent a design response to some of the long-term shifts occurring across the legal industry. <br><br>To some degree, the designs are interdependent and are likely to co-exist as law firms start to navigate and integrate new ways of working into their corporate culture."
+	"text":"These typologies are rooted in research and current best practice. They are not intended to be mutually exclusive; they represent a design response to some of the long-term shifts occurring across the legal industry."
 	},
 	{
 	"name":"The Magnet",
