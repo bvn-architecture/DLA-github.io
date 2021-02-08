@@ -6,7 +6,7 @@
 var camera, scene, renderer, rectangle, div, controls, manager, mixer, composer, dirLight, tween, coords, ambientlight;
 var clock = new THREE.Clock();
 var camTarget = new THREE.Vector3(0,0,0);
-var camPos = new THREE.Vector3(10, 50, -10);
+var camPos = new THREE.Vector3(10, 30, -10);
 var clips = [];
 var clipCount = 0;
 var TOD = 15;
@@ -15,8 +15,6 @@ var globalPlane;
 var scene2, renderer2, titleDiv0;
 var peopleGIFS = [];
 var callouts = [];
-
-console.log(calloutText[0].title);
 
 
 // 02____Events //
@@ -49,7 +47,7 @@ function init(){
   camera.position.x = camPos.x;
   camera.position.y = camPos.y;
   camera.position.z = camPos.z;
-  camera.zoom = 4;
+  camera.zoom = 3;
   camera.aspect = aspect;
   camera.target = camTarget;
   camera.updateProjectionMatrix();
@@ -81,11 +79,11 @@ function init(){
     });
     animate();
 
-    var coords = { y: 60 }; // Start at (0, 0)
+    var coords = { y: 30 }; // Start at (0, 0)
     var tween = new TWEEN.Tween(coords) // Create a new tween that modifies 'coords'.
-    tween.to({ y: 20 }, 2500) // Move to (300, 200) in 1 second.
+    tween.to({ y: 15 }, 2000) // Move to (300, 200) in 1 second.
     tween.easing(TWEEN.Easing.Elastic.Out);
-    tween.delay(500);
+    tween.delay(1000);
     tween.start(); // Start the tween immediately.
     tween.onUpdate(function(object) {
       var newHeight = coords.y;
@@ -219,10 +217,11 @@ function init(){
     element = document.createElement('div');
     element.style.opacity = 1;
     element.className = "calloutTag";
+    element.id = "calloutTag";
     elText = document.createElement('div');
     element.appendChild( elText );
     elText.className = "titleText";
-    elText.innerHTML = '<h3>' + calloutText[i].title + '</h3>' + '<h2>' + '<br>' + calloutText[i].subtitle + '</h2>';
+    elText.innerHTML = '<h4>' + calloutText[i].title + '</h4>' + '<h5>' + calloutText[i].subtitle + '</h5>';
 
     calloutObj = new THREE.CSS3DObject(element);
     calloutObj.rotation.x = -Math.PI;
@@ -231,31 +230,12 @@ function init(){
     calloutObj.position.y = calloutText[i].pos[1];
     calloutObj.position.z = calloutText[i].pos[2];
 
-    // var calloutOrient = new THREE.Vector3(camPos.x*10000, calloutObj.position.y, camPos.z*10000);
-    // calloutObj.lookAt(calloutOrient);
+    var calloutOrient = new THREE.Vector3(camPos.x*10000, calloutObj.position.y, camPos.z*10000);
+    calloutObj.lookAt(calloutOrient);
 
     callouts.push(calloutObj)
-    // scene2.add(calloutObj);
+    scene2.add(calloutObj);
   };
-
-  console.log(callouts);
-
-
-  element0 = document.createElement('div');
-  element0.className = "tag";
-  element0.style.opacity = 0;
-  elText0 = document.createElement('div');
-  element0.appendChild( elText0 );
-  elText0.className = "titleText";
-  elText0.innerHTML = '<b>0. </b>Landscaped Topography';
-
-  titleDiv0 = new THREE.CSS3DObject(element0);
-  titleDiv0.position.x = -110;
-  titleDiv0.position.y = -65;
-  titleDiv0.position.z = -72;
-  titleDiv0.rotation.x = -Math.PI / 2;
-  titleDiv0.rotation.z =  Math.PI;
-  scene2.add(titleDiv0);
 
 
   renderer2 = new THREE.CSS3DRenderer();
@@ -294,7 +274,15 @@ function animate(){
   for (i = 0; i < peopleGIFS.length; i++){
     var peopleOrient = new THREE.Vector3(camera.position.x*10000, peopleGIFS[i].position.y, camera.position.z*10000);
     peopleGIFS[i].lookAt(peopleOrient);
+
   };
+
+  for (i = 0; i < callouts.length; i++){
+    var calloutOrient = new THREE.Vector3(camera.position.x*10000, callouts[i].position.y, camera.position.z*10000);
+    callouts[i].lookAt(calloutOrient);
+  };
+
+
 
   renderer.render(scene, camera);
   renderer2.render( scene2, camera);
@@ -398,18 +386,34 @@ function toggleFullScreen() {
 var scenePos = [];
 var scenePosNames = [];
 var scenePosText = [];
+var scenePosZoom = [];
 var count = 0;
 
 for (i = 0; i < workSettingText.length; i++){
   scenePos.push(new THREE.Vector3(workSettingText[i].pos[0],workSettingText[i].pos[1],workSettingText[i].pos[2]))
   scenePosNames.push(workSettingText[i].name);
   scenePosText.push(workSettingText[i].text);
+  scenePosZoom.push(workSettingText[i].zoom);
 };
 
 document.getElementById('previous').addEventListener('click', prevImage, false);
 document.getElementById('next').addEventListener('click', nextImage, false);
 document.getElementById('imageRef').innerHTML = "<h3>" + scenePosNames[count] + "</h3>";
 document.getElementById('posText').innerHTML = "<p>" + scenePosText[count] + "</p>";
+
+
+// 06____TextReveal //
+
+function h5Toggle() {
+  console.log("clicked");
+  var x = document.getElementById("calloutTag");
+  console.log(x.style.display);
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+};
 
 function prevImage(){
   var vals = { y: scenePos[count].y, x: scenePos[count].x }; // Start at (0, 0)
@@ -434,14 +438,14 @@ function prevImage(){
 };
 
 function nextImage(){
-  var vals = { y: scenePos[count].y, x: scenePos[count].x }; // Start at (0, 0)
+  var vals = { y: scenePos[count].y, x: scenePos[count].x, z: camera.zoom }; // Start at (0, 0)
   count++;
   if (count >= scenePos.length){
     count = 0;
   };
   console.log(count);
   var tweenMoveScene = new TWEEN.Tween(vals) // Create a new tween that modifies 'vals'.
-  tweenMoveScene.to({ y: scenePos[count].y, x: scenePos[count].x }, 500) // Move to (300, 200) in 1 second.
+  tweenMoveScene.to({ y: scenePos[count].y, x: scenePos[count].x, z: scenePosZoom[count] }, 500) // Move to (300, 200) in 1 second.
   tweenMoveScene.easing(TWEEN.Easing.Quadratic.InOut);
   tweenMoveScene.delay(0);
   tweenMoveScene.start(); // Start the tween immediately.
@@ -450,6 +454,7 @@ function nextImage(){
     scene.getObjectByName( "scene" ).position.x = vals.x;
     scene2.getObjectByName( "scene2" ).position.z = vals.y;
     scene2.getObjectByName( "scene2" ).position.x = vals.x;
+    camera.zoom = vals.z;
   });
   document.getElementById('imageRef').innerHTML = "<h3>" + scenePosNames[count] + "</h3>";
   document.getElementById('posText').innerHTML = "<p>" + scenePosText[count] + "</p>";
