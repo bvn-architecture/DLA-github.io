@@ -14,8 +14,9 @@ var globalPlane;
 
 var scene2, renderer2, titleDiv0;
 var peopleGIFS = [];
+var callouts = [];
 
-console.log(workSettingText.length);
+console.log(calloutText[0].title);
 
 
 // 02____Events //
@@ -106,7 +107,7 @@ function init(){
           // object.material.envMap = envMap;
           // object.material.envMapIntensity = 0.5;
           object.castShadow = "true";
-          object.receiveShadow = "true"
+          object.receiveShadow = "true";
         };
 
         if (object instanceof THREE.Mesh && (object.name =='magnet')) {
@@ -141,23 +142,23 @@ function init(){
 
 
   //____Additional Geometry //
-  var planeGeometry = new THREE.PlaneGeometry( 100, 100, 64 );
+  var planeGeometry = new THREE.PlaneGeometry( 1000, 1000, 64 );
   planeGeometry.rotateX( - Math.PI / 2 );
   planeGeometry.rotateY( - Math.PI / 4 );
   var planeMaterial = new THREE.ShadowMaterial();
   planeMaterial.opacity = 0.35;
   var plane = new THREE.Mesh( planeGeometry, planeMaterial );
-  plane.position.y = 0.1;
+  plane.position.y = 0.2;
   plane.receiveShadow = true;
   scene.add( plane );
   
   //____Light //
-  ambientlight = new THREE.AmbientLight( 0x080808, 25 ); 
+  ambientlight = new THREE.AmbientLight( 0x080808, 20 ); 
   dirLight = new THREE.DirectionalLight( 0xFFFFFF, 0.8 );
-  dirLight.shadow.camera.right =  100;
-  dirLight.shadow.camera.left = -100;
-  dirLight.shadow.camera.top =  100;
-  dirLight.shadow.camera.bottom = -100;
+  dirLight.shadow.camera.right =  350;
+  dirLight.shadow.camera.left = -350;
+  dirLight.shadow.camera.top =  350;
+  dirLight.shadow.camera.bottom = -350;
   dirLight.position.y = 50
   dirLight.position.x = 20;
   dirLight.position.z = 20;
@@ -187,8 +188,8 @@ function init(){
 
 
   //_____CSS3D Renderers //
+  
   // People Anim //
-
   for (i = 0; i < people.length; i++){
     element = document.createElement('div');
     element.className = "tag";
@@ -205,7 +206,6 @@ function init(){
     peopleGIF.position.x = people[i].pos[0];
     peopleGIF.position.y = people[i].pos[1];
     peopleGIF.position.z = people[i].pos[2];
-    console.log(peopleGIF);
 
     var peopleOrient = new THREE.Vector3(camPos.x*10000, peopleGIF.position.y, camPos.z*10000);
     peopleGIF.lookAt(peopleOrient);
@@ -213,6 +213,49 @@ function init(){
     peopleGIFS.push(peopleGIF)
     scene2.add(peopleGIF);
   };
+
+  // Callouts //
+  for (i = 0; i < calloutText.length; i++){
+    element = document.createElement('div');
+    element.style.opacity = 1;
+    element.className = "calloutTag";
+    elText = document.createElement('div');
+    element.appendChild( elText );
+    elText.className = "titleText";
+    elText.innerHTML = '<h3>' + calloutText[i].title + '</h3>' + '<h2>' + '<br>' + calloutText[i].subtitle + '</h2>';
+
+    calloutObj = new THREE.CSS3DObject(element);
+    calloutObj.rotation.x = -Math.PI;
+    calloutObj.rotation.z = Math.PI;
+    calloutObj.position.x = calloutText[i].pos[0];
+    calloutObj.position.y = calloutText[i].pos[1];
+    calloutObj.position.z = calloutText[i].pos[2];
+
+    // var calloutOrient = new THREE.Vector3(camPos.x*10000, calloutObj.position.y, camPos.z*10000);
+    // calloutObj.lookAt(calloutOrient);
+
+    callouts.push(calloutObj)
+    // scene2.add(calloutObj);
+  };
+
+  console.log(callouts);
+
+
+  element0 = document.createElement('div');
+  element0.className = "tag";
+  element0.style.opacity = 0;
+  elText0 = document.createElement('div');
+  element0.appendChild( elText0 );
+  elText0.className = "titleText";
+  elText0.innerHTML = '<b>0. </b>Landscaped Topography';
+
+  titleDiv0 = new THREE.CSS3DObject(element0);
+  titleDiv0.position.x = -110;
+  titleDiv0.position.y = -65;
+  titleDiv0.position.z = -72;
+  titleDiv0.rotation.x = -Math.PI / 2;
+  titleDiv0.rotation.z =  Math.PI;
+  scene2.add(titleDiv0);
 
 
   renderer2 = new THREE.CSS3DRenderer();
