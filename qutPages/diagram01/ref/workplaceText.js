@@ -7,12 +7,6 @@ var workSettingText =
 	"text":"These typologies are rooted in research and current best practice. They are not intended to be mutually exclusive; they represent a design response to some of the long-term shifts occurring across the legal industry. <br><br>To some degree, the designs are interdependent and are likely to co-exist as law firms start to navigate and integrate new ways of working into their corporate culture."
 	},
 	{
-	"name":"The Mutual",
-	"pos": [0,-130,0],
-	"zoom": 7,
-	"text":"This model is based on the idea that law firms will undoubtedly have surplus real estate as a result of a more flexible workforce. <br><br> When combined with the clear trend towards more collaboration, there is an opportunity to partner with local institutions such as schools and universities to share space and gain access to emerging talent. Settings will be permeable to external partnerships and based on adaptability and mutuality."
-	},
-	{
 	"name":"The Magnet",
 	"pos": [-130,0,0],
 	"zoom": 7,
@@ -23,6 +17,12 @@ var workSettingText =
 	"pos": [0,130,0],
 	"zoom": 7,
 	"text":"This design is informed by the integration of technology talent into the legal workplace. <br><br>As interdisciplinary collaboration continues to occur, the provision of highly specialised and technical spaces will be required. Given the purpose of these mixed skillsets coming together is to spark creativity and innovation, these teams will require project rooms and plenty of inspiration. There will be a physical virtual overlap in these settings as human and machine intelligence inhabit the same environment."
+	},
+	{
+	"name":"The Mutual",
+	"pos": [0,-130,0],
+	"zoom": 7,
+	"text":"This model is based on the idea that law firms will undoubtedly have surplus real estate as a result of a more flexible workforce. <br><br> When combined with the clear trend towards more collaboration, there is an opportunity to partner with local institutions such as schools and universities to share space and gain access to emerging talent. Settings will be permeable to external partnerships and based on adaptability and mutuality."
 	},
 	{
 	"name":"The Mentor",
