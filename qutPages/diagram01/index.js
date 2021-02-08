@@ -17,7 +17,7 @@ var scene3, renderer3;
 var peopleGIFS = [];
 var callouts = [];
 
-console.log(window.devicePixelRatio);
+// console.log(window.devicePixelRatio);
 
 // 02____Events //
 window.addEventListener( 'resize', onWindowResize, false );
@@ -112,7 +112,7 @@ function init(){
         };
 
         if (object instanceof THREE.Mesh && (object.name =='magnet')) {
-          console.log("fired");
+          // console.log("fired");
           object.material.side = THREE.DoubleSide;
           object.castShadow = "false";
           object.receiveShadow = "false";
@@ -241,7 +241,7 @@ function init(){
     var calloutOrient = new THREE.Vector3(camPos.x*10000, calloutObj.position.y, camPos.z*10000);
     calloutObj.lookAt(calloutOrient);
 
-    callouts.push(calloutObj)
+    callouts.push(calloutObj);
     scene3.add(calloutObj);
   };
 
@@ -430,7 +430,7 @@ function prevImage(){
     count = scenePos.length-1;
   };
 
-  console.log(count);
+  // console.log(count);
 
   console.log(count);
   var tweenMoveScene = new TWEEN.Tween(vals) // Create a new tween that modifies 'vals'.
@@ -491,19 +491,27 @@ function nextImage(){
   
 
   var els = document.getElementsByClassName("elText");
-  var els2 = document.getElementsByClassName("elTitle");
 
   if (count != 0){
     for (var i = 0; i < els.length; i++) {
       els[i].style.display = 'block';
-      els2[i].style.display = 'block';
     }
   } else {
     for (var i = 0; i < els.length; i++) {
       els[i].style.display = 'none';
-      els2[i].style.display = 'none';
-    }
+    };
   };
+    
+  // if (count != 0){
+  //   for (var i = 0; i < callouts.length - 1; i++) {
+  //     callouts[0].element.style.display = 'block';
+  //   } 
+  // } else {
+  //     callouts[0].element.style.display = 'none';
+  // };
+  // };
+
+
 
   controls.update();
 };
