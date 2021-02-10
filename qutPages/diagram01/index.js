@@ -220,6 +220,7 @@ function init(){
   for (i = 0; i < calloutText.length; i++){
     element = document.createElement('div');
     element.style.opacity = 1;
+    element.style.borderColor = calloutText[i].bColor;
     element.className = "calloutTag";
     element.id = "calloutTag";
     elTitle = document.createElement('h4');
@@ -403,6 +404,7 @@ var scenePos = [];
 var scenePosNames = [];
 var scenePosText = [];
 var scenePosZoom = [];
+var scenePosCol = [];
 var count = 0;
 
 for (i = 0; i < workSettingText.length; i++){
@@ -410,11 +412,13 @@ for (i = 0; i < workSettingText.length; i++){
   scenePosNames.push(workSettingText[i].name);
   scenePosText.push(workSettingText[i].text);
   scenePosZoom.push(workSettingText[i].zoom);
+  scenePosCol.push(workSettingText[i].col);
 };
 
 document.getElementById('previous').addEventListener('click', prevImage, false);
 document.getElementById('next').addEventListener('click', nextImage, false);
 document.getElementById('imageRef').innerHTML = "<h3>" + scenePosNames[count] + "</h3>";
+document.getElementById('imageRef').style.display.color = scenePosCol[count];
 document.getElementById('posText').innerHTML = "<p>" + scenePosText[count] + "</p>";
 
 
@@ -429,8 +433,6 @@ function prevImage(){
   if (count < 0){
     count = scenePos.length-1;
   };
-
-  // console.log(count);
 
   console.log(count);
   var tweenMoveScene = new TWEEN.Tween(vals) // Create a new tween that modifies 'vals'.
@@ -494,7 +496,7 @@ function nextImage(){
 
   if (count != 0){
     for (var i = 0; i < els.length; i++) {
-      els[i].style.display = 'block';
+      els[i].style.display = 'none';
     }
   } else {
     for (var i = 0; i < els.length; i++) {
@@ -502,17 +504,6 @@ function nextImage(){
     };
   };
     
-  // if (count != 0){
-  //   for (var i = 0; i < callouts.length - 1; i++) {
-  //     callouts[0].element.style.display = 'block';
-  //   } 
-  // } else {
-  //     callouts[0].element.style.display = 'none';
-  // };
-  // };
-
-
-
   controls.update();
 };
 
