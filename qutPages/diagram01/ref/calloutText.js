@@ -8,7 +8,7 @@ var calloutHeight = 35;
 var calloutText = 
 [
 	{
-	"title":"VR Pod",
+	"title":"VR Pit",
 	"pos": [20, calloutHeight, -180],
 	"bColor":matrixCol,
 	"subtitle":"A short description of the above space and it's contribution to the setting."
@@ -20,14 +20,20 @@ var calloutText =
 	"subtitle":"A short description of the above space and it's contribution to the setting."
 	},
 	{
-	"title":"Academy",
+	"title":"Always-On Screen",
+	"pos": [-80, calloutHeight, -80],
+	"bColor":matrixCol,
+	"subtitle":"A short description of the above space and it's contribution to the setting."
+	},
+	{
+	"title":"Outdoor",
 	"pos": [-155, calloutHeight, -155],
 	"bColor":mentorCol,
 	"subtitle":"A short description of the above space and it's contribution to the setting."
 	},
 	{
-	"title":"Immersive",
-	"pos": [75, calloutHeight, -150],
+	"title":"Robots",
+	"pos": [70, calloutHeight, -125],
 	"bColor":matrixCol,
 	"subtitle":"A short description of the above space and it's contribution to the setting."
 	},
@@ -62,6 +68,18 @@ var calloutText =
 	"subtitle":"A short description of the above space and it's contribution to the setting."
 	},
 	{
+	"title":"Clubhouse",
+	"pos": [110, calloutHeight, 60],
+	"bColor":magnetCol,
+	"subtitle":"A short description of the above space and it's contribution to the setting."
+	},
+	{
+	"title":"DJ",
+	"pos": [110, calloutHeight, 135],
+	"bColor":magnetCol,
+	"subtitle":"A short description of the above space and it's contribution to the setting."
+	},
+	{
 	"title":"Cinema",
 	"pos": [180, calloutHeight, 180],
 	"bColor":magnetCol,
@@ -87,18 +105,24 @@ var calloutText =
 	},
 	{
 	"title":"Sleeping Pod",
-	"pos": [-125, calloutHeight, 75],
+	"pos": [-125, calloutHeight, 110],
 	"bColor":mentorCol,
 	"subtitle":"A short description of the above space and it's contribution to the setting."
 	},
 	{
 	"title":"Quiet Rooms",
-	"pos": [-125, calloutHeight, 10],
+	"pos": [-125, calloutHeight, -50],
 	"bColor":mentorCol,
 	"subtitle":"A short description of the above space and it's contribution to the setting."
 	},
 	{
-	"title":"Moot Court",
+	"title":"Prayer/Meditation",
+	"pos": [-125, calloutHeight, 30],
+	"bColor":mentorCol,
+	"subtitle":"A short description of the above space and it's contribution to the setting."
+	},
+	{
+	"title":"Academy",
 	"pos": [-170, calloutHeight, 180],
 	"bColor":mentorCol,
 	"subtitle":"A short description of the above space and it's contribution to the setting."
@@ -111,7 +135,7 @@ var calloutText =
 	},
 	{
 	"title":"Recording",
-	"pos": [-85, calloutHeight, 105],
+	"pos": [-65, calloutHeight, 105],
 	"bColor":mutualCol,
 	"subtitle":"A short description of the above space and it's contribution to the setting."
 	},
@@ -129,7 +153,7 @@ var calloutText =
 	},
 	{
 	"title":"Incubator",
-	"pos": [62, calloutHeight, 180],
+	"pos": [100, calloutHeight, 185],
 	"bColor":mutualCol,
 	"subtitle":"A short description of the above space and it's contribution to the setting."
 	}

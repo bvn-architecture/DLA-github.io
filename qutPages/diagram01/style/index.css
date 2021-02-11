@@ -98,14 +98,14 @@ hr {
 }
 
 #footer {
-  bottom: 6%;
+  /*bottom: 6%;*/
   z-index: 4;
   width: 100%;
   position: absolute;
   margin: auto;
   text-align: center;
   z-index: 10000;
-  background-color: rgba(255,255,255,0.7);
+  background-color: rgba(255,255,255,0.8);
   /*pointer-events: none;*/
 }
 
