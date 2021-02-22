@@ -51,7 +51,7 @@ h2 {
   font-size: 1.2em;
   color: black;
   font-family: 'Quicksand', sans-serif;
-  margin-bottom: 1.5em;
+  margin-bottom: 0em;
 }
 
 h3 {
@@ -98,14 +98,16 @@ hr {
 }
 
 #footer {
-  bottom: 2%;
+  bottom: 0%;
   z-index: 4;
   width: 100%;
   position: absolute;
   margin: auto;
   text-align: center;
   z-index: 10000;
-  background-color: rgba(255,255,255,0.8);
+  background-color: rgba(255,255,255,0.85);
+  padding-bottom: 2em;
+  padding-top: 1em;
   /*pointer-events: none;*/
 }
 
@@ -323,18 +325,18 @@ html {
 }
 
 .calloutTag {
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.85);
   border-radius: 10px;
   border: 3px solid black;
   text-align: left;
   max-width: 180px;
   z-index: 200;
-  padding: 10px;
+  padding: 15px;
   margin: auto;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.35);
   vertical-align: middle;
   justify-content: center;
-
+  visibility: hidden;
 }
 
 .calloutTag:hover {

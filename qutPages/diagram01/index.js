@@ -222,7 +222,7 @@ function init(){
     element.style.opacity = 1;
     element.style.borderColor = calloutText[i].bColor;
     element.className = "calloutTag";
-    element.id = "calloutTag";
+    element.id = calloutText[i].fitout;
     elTitle = document.createElement('h4');
     elText = document.createElement('h5');
     element.appendChild( elTitle );
@@ -407,6 +407,10 @@ var scenePosZoom = [];
 var scenePosCol = [];
 var count = 0;
 
+
+// console.log(els);
+
+
 for (i = 0; i < workSettingText.length; i++){
   scenePos.push(new THREE.Vector3(workSettingText[i].pos[0],workSettingText[i].pos[1],workSettingText[i].pos[2]))
   scenePosNames.push(workSettingText[i].name);
@@ -452,15 +456,22 @@ function prevImage(){
   document.getElementById('imageRef').innerHTML = "<h3>" + scenePosNames[count] + "</h3>";
   document.getElementById('posText').innerHTML = "<p>" + scenePosText[count] + "</p>";
 
-  var els = document.getElementsByClassName("elText");
+  var els = document.getElementsByClassName("calloutTag");
 
-  if (count != 0){
-    for (var i = 0; i < els.length; i++) {
-      els[i].style.display = 'block';
-    }
-  } else {
-    for (var i = 0; i < els.length; i++) {
-      els[i].style.display = 'none';
+
+  for (var i = 0; i < els.length; i++) {
+    if (count == 0){
+      els[i].style.visibility = 'hidden';
+    } else if (count==1 && els[i].id == "magnet"){
+      els[i].style.visibility = 'visible';
+    } else if (count==2 && els[i].id == "matrix"){
+      els[i].style.visibility = 'visible';
+    } else if (count==3 && els[i].id == "mentor"){
+      els[i].style.visibility = 'visible';
+    } else if (count==4 && els[i].id == "mutual"){
+      els[i].style.visibility = 'visible';
+    } else {
+      els[i].style.visibility = 'hidden';
     }
   };
   
@@ -491,19 +502,25 @@ function nextImage(){
   document.getElementById('imageRef').innerHTML = "<h3>" + scenePosNames[count] + "</h3>";
   document.getElementById('posText').innerHTML = "<p>" + scenePosText[count] + "</p>";
   
+  var els = document.getElementsByClassName("calloutTag");
 
-  var els = document.getElementsByClassName("elText");
 
-  if (count != 0){
-    for (var i = 0; i < els.length; i++) {
-      els[i].style.display = 'none';
+  for (var i = 0; i < els.length; i++) {
+    if (count == 0){
+      els[i].style.visibility = 'hidden';
+    } else if (count==1 && els[i].id == "magnet"){
+      els[i].style.visibility = 'visible';
+    } else if (count==2 && els[i].id == "matrix"){
+      els[i].style.visibility = 'visible';
+    } else if (count==3 && els[i].id == "mentor"){
+      els[i].style.visibility = 'visible';
+    } else if (count==4 && els[i].id == "mutual"){
+      els[i].style.visibility = 'visible';
+    } else {
+      els[i].style.visibility = 'hidden';
     }
-  } else {
-    for (var i = 0; i < els.length; i++) {
-      els[i].style.display = 'none';
-    };
   };
-    
+
   controls.update();
 };
 
