@@ -1,41 +1,103 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>BVN - Future of Legal Workplace Interactive Diagram Index Page</title>
-	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<meta name="viewport" content="initial-scale=0.66, user-scalable=no">
+	<title>DLA Future of Legal Workplace - Workstyles Model</title>
+	<!-- core libraries -->
+	<script type="text/javascript" src="node_modules/three/build/three.min.js"></script>
+	<script type="text/javascript" src="node_modules/three/build/three.module.js"></script>
+	<script type="text/javascript" src="node_modules/three/examples/js/renderers/CSS2DRenderer.js"></script>
+	<script type="text/javascript" src="node_modules/three/examples/js/renderers/CSS3DRenderer.js"></script>
+	<script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script type="text/javascript" src="node_modules/hammerjs/hammer.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+	<script type="text/javascript" src="js/tween.min.js"></script>
+	<!-- threejs misc and json import -->
+	<script type="text/javascript" src="node_modules/three/examples/js/controls/OrbitControls.js"></script>
+	<script type="text/javascript" src="node_modules/three/examples/js/loaders/GLTFLoader.js"></script>
+	<script type="text/javascript" src="node_modules/three/examples/js/loaders/DRACOLoader.js"></script>
+	<script type="text/javascript" src="node_modules/three/examples/js/libs/draco/gltf/draco_decoder.js"></script>
+	
+	<!-- threejs postprocessors -->
+	<script type="text/javascript" src="node_modules/three/examples/js/postprocessing/EffectComposer.js"></script>
+	<script type="text/javascript" src="node_modules/three/examples/js/shaders/CopyShader.js"></script>
+	<script type="text/javascript" src="node_modules/three/examples/js/postprocessing/RenderPass.js"></script>
+	<script type="text/javascript" src="node_modules/three/examples/js/postprocessing/ShaderPass.js"></script>
+	<script type="text/javascript" src="ref/sunPosition.js"></script>
+	<script type="text/javascript" src="ref/workplaceText.js"></script>
+	<script type="text/javascript" src="ref/calloutText.js"></script>
+	<script type="text/javascript" src="ref/peopleLocation.js"></script>
+	<script>$( function() {$( document ).tooltip()});</script>
+
+	<!-- style imports -->
+	<link rel="stylesheet" type="text/css" href="style/index.css">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Advent+Pro:500|Open+Sans" rel="stylesheet">
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-171781952-1"></script>
-	<script>
-	  window.dataLayer = window.dataLayer || [];
-	  function gtag(){dataLayer.push(arguments);}
-	  gtag('js', new Date());
-	  gtag('config', 'UA-171781952-1');
-	</script>
+	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:700|Quicksand" rel="stylesheet">
 </head>
 
 <body>
 
-	<div id="title">
-	  <!-- <h3 style="display: inline-block; font-size: 60px; margin: 0">/</h3> -->
-	  <img style="height:40px; padding-right: 10px;" src="img/BVN_Black_Small.png">
-	  <img style="height:67px; padding-right: 0px;" src="img/icon_animated.gif">
-	  <br><br>
-	  <h1 id="titleText">Future of Legal Workplace Interactive Diagram Index Page</h1>
-	  <p id="paragraph">Experimental WebGL Diagrams for Progressive Architectural Communication</p>
-	  <br><br>
-	</div>
+	<section id="flexContainer">
+	  <div class="flexBox" id="left-half">
+  		<div id="containerCSS"></div>
+  		<div id="containerCSS2"></div>
+  		<div id="container"></div>
+	  </div>
+	  <!-- text content -->
+	  <div class="flexBox" id="right-half">
+	      <div id="textContent">
+	        <h1 id="heading" style="margin-top: 1.5em">The Future Legal Workplace</h1>
+	        <h2 id="heading">Designing for Resilience in the Legal Sector</h2><br>
+	      	<div style="display: inline-block;">
+		      	<a href="#" title="BVN"><img style="height:25px; margin-right: 0.5em; margin-bottom: 1.5em;" src="img/BVN_Black_Small.png"></a>
+		      	<a href="#" title="Cushman & Wakefield"><img style="height:25px; margin-right: 0.5em; margin-bottom: 1.5em" src="img/cushman-01.png"></a>
+		      	<a href="#" title="Worktech Academy"><img style="height:25px; margin-right: 0.5em; margin-bottom: 1.5em" src="img/worktech-01.png"></a>
+	    	</div>
+	        <p>At a time of dynamic change for the legal industry, the intersection of space, technology and culture is opening up new vistas for how the legal workplace is designed. While law firms have adapted well to the shift to remote working, there is still a strong appetite across the three key regions to return to the office.</p>
+	        <br><br><hr><br>
+	        
+	        <div id="workstyleInfo" style="width: 80%; text-align: center; margin: auto;">
+		        <div id="posSelector" style="padding-top: 15px"></div><br>
+		    	<div id="posText" style="padding-bottom: 15px">
+		    		<p>These four typologies are rooted in research and current best practice. They are not intended to be mutually exclusive; they represent a design response to some of the long-term shifts occurring across the legal industry. To some degree, the designs are interdependent and are likely to co-exist as law firms start to navigate and integrate new ways of working into their corporate culture.</p>
+	    		</div>
+	    	</div>
+			
+			<br><br><br>
 
-	<div class="grid">
-	  	<a href="qutPages/diagram01"><div class="module"><img src="img/robot.png" style="width: 100%;"></div><br><h2>Workstyle A</h2></a>
-	</div>
+			<!-- <br><br>
 
-	<br><br>
-	<div id="footer" style="width:250px">
-		<img src="img/500px-CC-BY-SA_icon.png" style="width:80px">
-	  	<p id="paragraph" style="font-size:0.6em">This work is licensed under a Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Australia (CC BY-NC-ND 3.0 AU)</p>
-	</div>
+	      	<!-- <p><b>Legend:</b><br><br></p><a href="#" title="Diagram Legend"><img style="width:80px; margin-bottom: 20px;" src="img/legend-01.png"></a> -->
+	      </div>
+	  </div>
+	</section> 
+		
+	<section>
+		<div id="header">
+			<h1 id="heading" style="margin-top: 0em">The Future Legal Workplace</h1>
+			<h2 id="heading">Designing for Resilience in the Legal Sector</h2><br>
+		</div>
 
+		<div class = 'buttonBar' id='buttonBar'>
+			<div class="buttonContent">
+				<a href="#" class="previous round" id="previous"><h3 style="margin: -0.1em; color: black;">&#8249;</h3></a>
+				<div class="imageRef" id="imageRef"><h1 style="margin: 0;">MENTOR</h1></div>
+				<a href="#" class="next round" id="next"><h3 style="margin: -0.1em; color: black;">&#8250;</h3></a>
+			</div>
+		</div>
+		
+		<div id="footer">
+			<!-- <h2><u>Learn More</u></h2> -->
+		</div>
+
+	</section>
+	<!-- <script type="text/javascript" src="/index.js"></script> -->
+	<script type="text/javascript" src="index.js"></script>
 </body>
+
 </html>
