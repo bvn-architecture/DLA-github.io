@@ -39,7 +39,7 @@ html, body, section {
 
 
 h1 {
-  font-size: 2.8em;
+  font-size: 2.1em;
   color: black;
   font-family: 'Playfair Display', serif;
   line-height: 100%;
@@ -225,8 +225,8 @@ html {
 
 #textContent {
   /*padding-top: 18%;*/
-  padding-right: 100px;
-  padding-left: 110px;
+  padding-right: 60px;
+  padding-left: 75px;
   z-index: 10000;
   overflow: auto;
 }
